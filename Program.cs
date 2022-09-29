@@ -43,11 +43,13 @@ while(r){
 
 
                 bool arrend = true;
+
+                arr[zi][yi][xi]+= 1;
                 while (arrend){
 
 
                     int nr = new Random().Next(0,n);
-                    arr[zi+=zv][yi+=yv][xi+=xv]+= 1;//narr[nr];
+                    //arr[zi+=zv][yi+=yv][xi+=xv]+= 1;//narr[nr];
                     narr[nr]=narr[n--];
                     //Console.Write($"({xi+1},{yi+1},{zi+1})");
                     Console.Clear();
@@ -57,35 +59,36 @@ while(r){
                         }
                         Console.WriteLine("-----");
                     }
-                    
 
 
 
-                    if(xi==yi){ //переключаем вектор движения на диагонали x=y
-                        if(xi<=(xs-1)/2&yi<=(ys-1)/2){
-                            xv=1;yv=0;zv=0;
-                        }             
+
+                    for (int i = xi+1; i<= xs-yi-1;i++){
+                        xi = i;
+                        arr[zi][yi][xi]+= 1;
                     }
-                    if((xs-1)-xi==yi){//переключаем вектор движения на диагонали xs-x=y
-                        if(xi>=(xs-1)/2&yi<=(ys-1)/2){
-                            xv=0;yv=1;zv=0;
-                        }  
-                    }else if((xs-1)-xi==(ys-1)-yi){ //переключаем вектор движения на диагонали x=y
-                        if(xi>=(xs-1)/2&yi>=(ys-1)/2){
-                            xv=-1;yv=0;zv=0;
-                        }             
-                    }else if(xi==(ys-1)-yi){//переключаем вектор движения на диагонали xs-x=y
-                        if(xi<=(xs-1)/2&yi>=(ys-1)/2){
-                            xv=0;yv=-1;zv=0;
-                        }  
+                    for (int i = yi+1; i<= ys-xs+xi;i++){
+                        yi = i;
+                        arr[zi][yi][xi]+= 1;
                     }
-                    if(xi==yi-1){ //переключаем вектор движения на диагонали x=y
-                        if(xi<=(xs-1)/2&yi<=(ys-1)/2){
-                            xv=0;yv=-1;zi+=rev;
-                        }             
+                    for (int i = xi-1; i>= ys-yi-1;i--){
+                        xi = i;
+                        arr[zi][yi][xi]+= 1;
                     }
-                    if(zi==zs|zi==-1){
-                            yv=0;xv=1;rev*=-1;zi+=rev;
+                    for (int i = yi-1; i>= xi;i--){
+                        yi = i;
+                        if(yi==xi+1){
+                            arr[zi][yi][xi]+= 1;
+                            if(zi+rev==zs|zi+rev==-1){
+                                rev*=-1;
+                                i--;
+                            }else{
+                                zi+=rev;
+                            }
+                            
+                        }else{
+                            arr[zi][yi][xi]+= 1;
+                        }
                     }
                 }
             }else{
